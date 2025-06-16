@@ -1,0 +1,1 @@
+export interface IApiResp { status: string; data: any | null }

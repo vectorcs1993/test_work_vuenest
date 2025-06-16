@@ -1,13 +1,17 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
-import { ChecksModule } from './checks/checks.module';
-
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [UsersModule, ChecksModule],
+  imports: [ConfigModule.forRoot({
+    envFilePath: '.env', // путь к вашему .env файлу
+    isGlobal: true,     // делает модуль глобальным (доступным во всем приложении)
+  }), UsersModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, DatabaseModule],
+  exports: [],
 })
 export class AppModule { }
